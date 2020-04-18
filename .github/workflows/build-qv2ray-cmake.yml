@@ -144,21 +144,37 @@ jobs:
         if: matrix.platform == 'ubuntu-16.04'
         run: | 
           cd build
+          echo "=================================="; tree
           wget https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage
+          echo "=================================="; tree
           chmod +x ./linuxdeployqt-6-x86_64.AppImage
+          echo "=================================="; tree
           ./linuxdeployqt-6-x86_64.AppImage --appimage-extract
+          echo "=================================="; tree
           cd AppDir
+          echo "=================================="; tree
           wget -c https://github.com/darealshinji/AppImageKit-checkrt/releases/download/continuous/AppRun-patched-x86_64 -O AppRun
+          echo "=================================="; tree
           chmod a+x AppRun
+          echo "=================================="; tree
           mkdir -p ./usr/{lib,optional}/
+          echo "=================================="; tree
           wget -c https://github.com/darealshinji/AppImageKit-checkrt/releases/download/continuous/exec-x86_64.so -O ./usr/optional/exec.so
+          echo "=================================="; tree
           mkdir -p ./usr/optional/libstdc++/
+          echo "=================================="; tree
           cp -fv /usr/lib/x86_64-linux-gnu/libstdc++.so.6 ./usr/optional/libstdc++/
+          echo "=================================="; tree
           mkdir -p ./usr/optional/libgcc_s/
+          echo "=================================="; tree
           cp -fv /lib/x86_64-linux-gnu/libgcc_s.so.1 ./usr/optional/libgcc_s/
+          echo "=================================="; tree
           cp -fv /usr/lib/x86_64-linux-gnu/{libssl.so.1.1,libcrypto.so.1.1} ./usr/lib/
+          echo "=================================="; tree
           ../squashfs-root/AppRun usr/share/applications/qv2ray.desktop -appimage -no-strip -always-overwrite
+          echo "=================================="; tree
           mv ./Qv2ray*.AppImage ./Qv2ray.AppImage
+          echo "=================================="; tree
       - name: Linux - ${{ matrix.qt_version }} - Uploading artifact
         if: matrix.platform == 'ubuntu-16.04'
         uses: actions/upload-artifact@master
